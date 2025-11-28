@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>MediVault</title>
+    <style>
+    body {
+    margin: 0;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    /* Blue header */
+    header {
+        background-color: dodgerblue;
+        height: 70%;
+        text-align: center;
+        color: white;
+        padding-bottom: 40px;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+    }
+    header h1 {
+        font-size: 400%;
+        padding-top: 10%;
+        margin: 0;
+    }
+    header p {
+        font-size: medium;
+        margin-top: 10px;
+    }
+    hr {
+        width: 95%;
+        border: none;
+        border-top: 1px solid whitesmoke;
+        margin-top: 140px;
+    }
+    /* Toggle area */
+    .toggle-wrapper {
+        display: flex;
+        align-items: center;
+        gap: 80px;
+        font-size: 18px;
+        justify-content: center;
+        margin-top: 40px;
+        color: black;
+        font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    }
+    .toggle {
+        position: relative;
+        display: inline-block;
+        width: 105px;
+        height: 34px;
+    }
+    .toggle input {
+        display: none;
+    }
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 30px;
+    }
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 46px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 20px;
+    }
+    input:checked + .slider {
+        background-color: #08d6e5;
+    }
+    input:checked + .slider:before {
+        transform: translateX(50px);
+    }
+    /* Active label */
+    .active {
+        color: white;
+    }
+    /* White section */
+    .white-section {
+        background-color: white;
+        text-align: center;
+        padding: 60px 20px;
+    }
+    .white-section button {
+        background-color: dodgerblue;
+        color: white;
+        padding: 14px 28px;
+        border: none;
+        border-radius: 10px;
+        font-size: 15px;
+        cursor: pointer;
+        margin-top: 20px;
+        width: 210px;
+        box-shadow: 2px 2px 0px 0px gray;
+    }
+    </style>
+</head>
+<body>
+<!-- Blue area -->
+    <header>
+        <h1>MediVault</h1>
+        <p>Your Secure Medical Workspace</p>
+        <hr>
+        <div class="toggle-wrapper">
+            <span id="leftLabel">Patient</span>
+            <label class="toggle">
+            <input type="checkbox" id="roleToggle">
+            <span class="slider"></span>
+            </label>
+            <span id="rightLabel">Doctor</span>
+        </div>
+    </header>
+    <!-- White bottom area -->
+    <div class="white-section">
+        <button id="continueBtn">Continue to Login</button>
+    </div>
+
+    <script>
+        const toggle = document.getElementById("roleToggle");
+        const leftLabel = document.getElementById("leftLabel");
+        const rightLabel = document.getElementById("rightLabel");
+        const continueBtn = document.getElementById("continueBtn");
+    function updateLabels() {
+    if (toggle.checked) {
+        rightLabel.classList.add("active");
+        leftLabel.classList.remove("active");
+    } else {
+        leftLabel.classList.add("active");
+        rightLabel.classList.remove("active");
+    }
+    }
+    toggle.addEventListener("change", updateLabels);
+    updateLabels(); // initialize
+    // Redirect on button click
+    continueBtn.addEventListener("click", () => {
+        if (toggle.checked) {
+        window.location.href = "login.dt.html"; // doctor page
+        } else {
+        window.location.href = "login.pt.html"; // patient page
+        }
+        });
+    </script>
+
+</body>
+</html>
