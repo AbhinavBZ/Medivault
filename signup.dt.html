@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MediVault - Doctor Sign Up</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .signup-container {
+      background: #fff;
+      padding: 20%;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px rgba(0, 153, 255, 0.15);
+      width: 100%;
+    }
+    .signup-container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+      color: #0066cc;
+    }
+    .form-group {
+      margin-bottom: 15px;
+    }
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: bold;
+      color: #000000;
+    }
+    input, select {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 14px;
+    }
+    button {
+      width: 100%;
+      padding: 12px;
+      background: #0066cc;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #004d99;
+    }
+    .extra {
+      text-align: center;
+      margin-top: 15px;
+      font-size: 14px;
+    }
+    .extra a {
+      color: #0066cc;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="signup-container" style="background: repeating-linear-gradient(21deg,#ffffff,#e7eafc 100px, #eaeaeb 200px);">
+    <h2 style="padding-top: 20%; font-family: Verdana, Geneva, Tahoma, sans-serif; font-size: 350%; margin-bottom: 5%;">Doctor Sign Up</h2>
+    <form action="signup.dt.php" method="POST">
+      <!-- Basic Info -->
+      <div class="form-group">
+        <label>Full Name</label>
+        <input type="text" placeholder="Enter your full name" name="fullname" required>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" placeholder="Enter your email" name="email" required>
+      </div>
+      <div class="form-group">
+        <label>Mobile Number</label>
+        <input type="tel" placeholder="Enter your mobile number" name="phone" required>
+      </div>
+      
+      <!-- Professional Info -->
+      <div class="form-group">
+        <label>Medical License Number</label>
+        <input type="text" placeholder="Enter your license/registration no." name="license" required>
+      </div>
+      <div class="form-group">
+        <label>Specialization</label>
+        <select name="specialization" required>
+          <option value="" >Select Specialization</option>
+          <option >Cardiologist</option>
+          <option>Dentist</option>
+          <option>Dermatologist</option>
+          <option>Gynecologist</option>
+          <option>Pediatrician</option>
+          <option>General Physician</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Years of Experience</label>
+        <input type="number" min="0" placeholder="Enter years of experience" name="experience" required>
+      </div>
+      <div class="form-group">
+        <label>Qualifications</label>
+        <input type="text" placeholder="e.g., MBBS, MD" name="qualification" required>
+      </div>
+      
+      <!-- Login Info -->
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" placeholder="Create a password" name="password" required>
+      </div>
+      <div class="form-group">
+        <label>Confirm Password</label>
+        <input type="password" placeholder="Re-enter password" name="confirmpassword" required>
+      </div>
+      <button type="submit">Sign Up</button>
+    </form>
+  </div>
+</body>
+</html>

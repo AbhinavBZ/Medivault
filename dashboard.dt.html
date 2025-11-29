@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>MediVault</title>
+  <style>
+    body {margin:0; font-family: Arial, sans-serif; background:#f8f9fb; color:#333;}
+    header, .sidebar, .main {padding:20px;}
+    header {background:#007bff; color:white; text-align:center;}
+    .login-box {max-width:400px; margin:50px auto; padding:20px; background:white; border-radius:10px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
+    input, select {width:100%; padding:10px; margin:10px 0; border:1px solid #ccc; border-radius:5px;}
+    .dashboard {display:flex; height:100vh;}
+    .sidebar {width:250px; background:#fff; border-right:1px solid #ddd;}
+    .profile-card {text-align:center;}
+    .profile-card img {width:80px; border-radius:50%;}
+    .main {flex:1; display:flex; flex-direction:column;}
+    .top {flex:1; display:flex; border-bottom:1px solid #ddd;}
+    .calendar {flex:2; margin:10px;background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      padding: 20px;
+      width: 350px;}
+    .checklist {flex:1; background:#fff; margin:10px; padding:10px; border-radius:10px;}
+    .bottom {flex:1; display:flex;}
+    .patients {flex:1; background:#fff; margin:10px; padding:10px; border-radius:10px; overflow-y:auto;}
+    .patient-details {flex:2; background:#fff; margin:10px; padding:10px; border-radius:10px;}
+    .patient {padding:10px; border-bottom:1px solid #ddd; cursor:pointer;}
+    .patient:hover {background:#f1f1f1;}
+    h2 {margin-top:0;}
+  </style>
+</head>
+<body>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <div class="profile-card">
+        <img src="https://img.freepik.com/premium-vector/doctor-profile-with-medical-service-icon_617655-48.jpg" alt="Doctor"/>
+        <h3><?php echo htmlspecialchars($doctor['fullname']); ?></h3>
+        <p>Email: <?php echo htmlspecialchars($doctor['email']); ?></p>
+        <p>Phone: <?php echo htmlspecialchars($doctor['phone']); ?></p>
+        <p>Specialization: <?php echo htmlspecialchars($doctor['specialization']); ?></p>
+        <p>Qualification: <?php echo htmlspecialchars($doctor['qualification']); ?></p>
+        <p>Experience: <?php echo htmlspecialchars($doctor['experience']); ?> years</p>
+        <p>License: <?php echo htmlspecialchars($doctor['license']); ?></p>
+        <button class="btn">Edit Profile</button>
+      </div>
+      <hr/>
+      <p><a href="#">Settings</a></p>
+      <p><a href="#">Staff Management</a></p>
+      <p><a href="logout.php">Logout</a></p>
+
+    </div>
+
+    <!-- Main Area -->
+    <div class="main">
+      <!-- Top Half -->
+      <div class="top">
+        <div class="calendar">
+          <h2>Appointment Calendar</h2>
+
+  <style>
+    .calendar header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .calendar header h2 {
+      font-size: 20px;
+      margin: 0;
+    }
+
+    .calendar header button {
+      background: #6c63ff;
+      border: none;
+      color: #fff;
+      padding: 6px 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .calendar header button:hover {
+      background: #574fd8;
+    }
+
+    .days {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+      text-align: center;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .dates {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 5px;
+    }
+
+    .dates div {
+      padding: 10px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .dates div:hover {
+      background: #eee;
+    }
+
+    .today {
+      background: #6c63ff;
+      color: #fff;
+      font-weight: bold;
+    }
+
+    .selected {
+      background: #ff6584;
+      color: #fff;
+    }
+  </style>
+
+  <div class="calendar">
+    <header>
+      <button id="prev">&#10094;</button>
+      <h2 id="month-year"></h2>
+      <button id="next">&#10095;</button>
+    </header>
+    <div class="days">
+      <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div>
+      <div>Thu</div><div>Fri</div><div>Sat</div>
+    </div>
+    <div class="dates" id="dates"></div>
+  </div>
+
+  <script>
+    const monthYear = document.getElementById("month-year");
+    const dates = document.getElementById("dates");
+    const prev = document.getElementById("prev");
+    const next = document.getElementById("next");
+
+    let today = new Date();
+    let currentMonth = today.getMonth();
+    let currentYear = today.getFullYear();
+    let selectedDate = null;
+
+    function renderCalendar(month, year) {
+      dates.innerHTML = "";
+      const firstDay = new Date(year, month, 1).getDay();
+      const lastDate = new Date(year, month + 1, 0).getDate();
+      const monthNames = [
+        "January","February","March","April","May","June",
+        "July","August","September","October","November","December"
+      ];
+
+      monthYear.innerText = `${monthNames[month]} ${year}`;
+
+      // Empty slots before first day
+      for (let i = 0; i < firstDay; i++) {
+        const empty = document.createElement("div");
+        dates.appendChild(empty);
+      }
+
+      // Dates
+      for (let d = 1; d <= lastDate; d++) {
+        const dateDiv = document.createElement("div");
+        dateDiv.innerText = d;
+
+        // Highlight today
+        if (
+          d === today.getDate() &&
+          month === today.getMonth() &&
+          year === today.getFullYear()
+        ) {
+          dateDiv.classList.add("today");
+        }
+
+        // Click to select date
+        dateDiv.addEventListener("click", () => {
+          document.querySelectorAll(".dates div").forEach(el => el.classList.remove("selected"));
+          dateDiv.classList.add("selected");
+          selectedDate = new Date(year, month, d);
+
+          // Save appointment to database
+          fetch("save_appointment.php", {
+            method: "POST",
+            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+            body: "date=" + selectedDate.toISOString().split('T')[0]
+          })
+          .then(res => res.text())
+          .then(data => alert(data));
+          });
+
+
+        dates.appendChild(dateDiv);
+      }
+    }
+
+    prev.addEventListener("click", () => {
+      currentMonth--;
+      if (currentMonth < 0) {
+        currentMonth = 11;
+        currentYear--;
+      }
+      renderCalendar(currentMonth, currentYear);
+    });
+
+    next.addEventListener("click", () => {
+      currentMonth++;
+      if (currentMonth > 11) {
+        currentMonth = 0;
+        currentYear++;
+      }
+      renderCalendar(currentMonth, currentYear);
+    });
+
+    renderCalendar(currentMonth, currentYear);
+  </script>
+  
+        </div>
+        <div class="checklist">
+          <h2>Checklist</h2>
+          <ul>
+            <li><input type="checkbox"/> Review Patient Reports</li>
+            <li><input type="checkbox"/> Verify Insurance</li>
+            <li><input type="checkbox"/> Call Patient X</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Half -->
+      <div class="bottom">
+        <div class="patients">
+          <h2>Patient List</h2>
+          <div class="patient" onclick="showPatient('Alice Smith')">Alice Smith</div>
+          <div class="patient" onclick="showPatient('Bob Johnson')">Bob Johnson</div>
+          <div class="patient" onclick="showPatient('Carla Brown')">Carla Brown</div>
+        </div>
+        <div class="patient-details">
+          <h2 id="patient-name">Select a Patient</h2>
+          <p id="patient-info">Click a patient to view records.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+<script>
+  function goToPage(num){
+    document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+    document.getElementById('page'+num).classList.add('active');
+  }
+  function showPatient(name){
+    document.getElementById('patient-name').innerText = name;
+    document.getElementById('patient-info').innerHTML = `
+      <b>${name}</b><br/>
+      Age: 30<br/>
+      Status: Regular Checkup<br/>
+      Reports: <a href="#">View</a><br/>
+      Prescription: <a href="#">View</a><br/>
+      <textarea placeholder="Add Progress Notes"></textarea><br/>
+      <button class="btn">Save Progress</button>
+    `;
+  }
+</script>
+</body>
+</html>
